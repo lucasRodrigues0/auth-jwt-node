@@ -47,7 +47,7 @@ export const Login = async (req: Request, res: Response, next: NextFunction) => 
 
     if(!verify) {
         throw new InvalidPasswordError("Passwords do not match!");
-    }
+    } 
 
     const token = jwt.sign(
         { id: user._id}, 
@@ -55,6 +55,5 @@ export const Login = async (req: Request, res: Response, next: NextFunction) => 
         {expiresIn: '1w'}
     );
 
-    // return res.status(200).json({message: `key: ${process.env.PRIVATE_KEY}`});
     return res.status(200).json({token: token});
 }

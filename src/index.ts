@@ -1,5 +1,5 @@
 require('dotenv').config();
-import "express-async-errors";
+import "express-async-errors"; //deve estar antes de todos os outros imports
 import express from 'express';
 import { authRouter } from './router/auth-router';
 import { main } from './db';

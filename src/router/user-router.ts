@@ -9,6 +9,6 @@ userRouter.get("/public", (req: Request, res: Response, next: NextFunction) => {
 })
 
 //todas as rotas abaixo necessitam de autenticação
-userRouter.use(AuthMiddleware)
+userRouter.use(AuthMiddleware);
 
 userRouter.get('/', LoadUserInfo);
