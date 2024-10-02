@@ -55,5 +55,17 @@ export const Login = async (req: Request, res: Response, next: NextFunction) => 
         {expiresIn: '1w'}
     );
 
-    return res.status(200).json({token: token});
+    res.cookie('token', token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        maxAge: 4 * 60 * 60 * 1000, //1 semana
+        sameSite: 'strict'
+    });
+
+    return res.status(200).json({message: "login successfull!"});
 }
+
+export const checkAuth = (req: Request, res: Response) => {
+    // If middleware passes, user is authenticated
+    res.status(200).json({ isAuthenticated: true });
+  }

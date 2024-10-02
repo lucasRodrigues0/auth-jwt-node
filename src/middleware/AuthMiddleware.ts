@@ -8,13 +8,11 @@ import jwt from 'jsonwebtoken';
 
 export const AuthMiddleware = async (req: Request, res: Response, next: NextFunction) => {
 
-    const { authorization } = req.headers;
+    const token = req.cookies.token;
 
-    if(!authorization) {
+    if(!token) {
         throw new UnauthorizedError("Unauthorized");
     }
-
-    const token = authorization.split(' ')[1];
 
     const { id } = jwt.verify(token, process.env.PRIVATE_KEY ?? '') as JwtPayload;
 
