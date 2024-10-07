@@ -65,7 +65,19 @@ export const Login = async (req: Request, res: Response, next: NextFunction) => 
     return res.status(200).json({message: "login successfull!"});
 }
 
-export const checkAuth = (req: Request, res: Response) => {
+export const checkAuth = (req: Request, res: Response, next: NextFunction) => {
     // If middleware passes, user is authenticated
     res.status(200).json({ isAuthenticated: true });
-  }
+}
+
+export const Logout = (req: Request, res: Response, next: NextFunction) => {
+
+    res.cookie('token', '', {
+        httpOnly: true,
+        secure: false,
+        maxAge: 0,
+        sameSite: 'strict'
+    });
+
+    return res.status(200).json({message: "logout success!"});
+}
