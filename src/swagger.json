@@ -1,0 +1,191 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Auth Example api",
+        "version": "1.0.0",
+        "description": "a simple api to study the authentication flow"
+    },
+    "paths": {
+        "/api/auth/register": {
+            "post": {
+                "summary": "Cadastro de usuários",
+                "description": "Essa rota é responsável por cadastrar um usuário no banco de dados",
+                "tags": [
+                    "Auth"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UserAuth"
+                            },
+                            "examples": {
+                                "user": {
+                                    "value": {
+                                        "name": "Lucas Bot",
+                                        "email": "lucas@bot.com",
+                                        "password": "1234"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "created"
+                    },
+                    "400": {
+                        "description": "User already exists"
+                    }
+                }
+            }
+        },
+        "/api/auth/login": {
+            "post": {
+                "summary": "login de usuário",
+                "description": "Essa rota é responsável por fazer o login do usuário (cookie-based login)",
+                "tags": [
+                    "Auth"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Login"
+                            },
+                            "examples": {
+                                "user": {
+                                    "value": {
+                                        "email": "lucas@bot.com",
+                                        "password": "1234"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "login successfull!"
+                    },
+                    "404": {
+                        "description": "User not found"
+                    },
+                    "401": {
+                        "description": "Invalid credentials"
+                    }
+                }
+            }
+        },
+        "/api/auth/logout": {
+            "post": {
+                "summary": "logout de usuário",
+                "description": "Essa rota é responsável por fazer o logout do usuário",
+                "tags": [
+                    "Auth"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "logout success!"
+                    }
+                }
+            }
+        },
+        "/api/auth/check-auth": {
+            "get": {
+                "summary": "verificação de token",
+                "description": "Essa rota é responsável por verificar se o token de autenticação existe",
+                "tags": [
+                    "Auth"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "success"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                }
+            }
+        },
+        "/api/user": {
+            "get": {
+                "summary": "Usuário",
+                "description": "Essa rota é responsável por retornar as informações do usuário logado a partir de um token JWT salvo nos cookies",
+                "tags": [
+                    "User"
+                ],
+                "responses": {
+                    "200": {
+                       "description": "Login successfull",
+                       "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "$ref": "#/components/schemas/User"
+                            }
+                        }
+                       }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "UserAuth": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "name",
+                    "email",
+                    "password"
+                ]
+            },
+            "Login": {
+                "type": "object",
+                "properties": {
+                    "email": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "email",
+                    "password"
+                ]
+            },
+            "User": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "name",
+                    "email"
+                ]
+            }
+        }
+    }
+}

@@ -7,6 +7,8 @@ import { ErrorHandler } from './middleware/ErrorMiddleware';
 import { userRouter } from "./router/user-router";
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
+import swaggerUi from 'swagger-ui-express';
+import swaggerDocs from './swagger.json';
 
 const app = express();
 
@@ -26,6 +28,9 @@ app.use('/api/auth', authRouter);
 app.use('/api/user', userRouter);
 //middleware para tratamento de erros
 app.use(ErrorHandler);
+//documentação da api (swagger)
+// app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 app.listen(port, () => {
     console.log(`Servidor iniciado na porta: ${port}`);
